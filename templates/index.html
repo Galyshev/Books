@@ -5,9 +5,12 @@
   </style>
 {% endblock %}
 {% block content %}
+<form action = "/" method = "post" >
 <div class="box_buttons">
-<button type="button" class="child new" value="new"> Пошук нового</button>
-<button type="button" class="child add" value="add"> Добавити у базу</button>
-<button type="button" class="child find" value="find"> Пошук по базі</button>
+<button type="submit" name="button" class="child new" value="new"> Пошук нового</button>
+<button type="submit" name="button" class="child add" value="add"> Додати до бази</button>
+<button type="submit" name="button" class="child find" value="find"> Пошук по базі</button>
  </div>
+<button type="submit" name="button" class="statistics" value="statistics"> Статистика</button>
+</form >
 {% endblock %}

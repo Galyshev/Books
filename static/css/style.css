@@ -12,13 +12,20 @@ body {
   display: flex;
   flex-flow: column wrap-reverse;
   align-items: center;
-  padding: 200px 10px;
+  padding: 170px 10px;
 
 }
 .child {
   margin: 15px;
   padding: 10px 10px;
   width: 25%;
+  font-weight: 500;
+  font-size: 3em;
+  text-align: center;
+}
+.statistics {
+  padding: 1px 1px;
+  width: 20%;
   font-weight: 500;
   font-size: 3em;
   text-align: center;
