@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: white;
+  background-image: url("/static/img/books_fon.jpg");
+}
+
+.box_buttons {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column wrap-reverse;
+  align-items: center;
+  padding: 200px 10px;
+
+}
+.child {
+  margin: 15px;
+  padding: 10px 10px;
+  width: 25%;
+  font-weight: 500;
+  font-size: 3em;
+  text-align: center;
+}
