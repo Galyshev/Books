@@ -9,11 +9,16 @@
 <form action = "/add" method = "post" >
 <div class="container_add_input">
 Посилання на книгу: <input class="add_input" type = "text"  name = "link">
-  <button type="submit" name="add_btn" class="add_btn" value="add_btn"> Додати до бази</button>
+  <button type="submit" name="add_btn" class="add_btn"> Додати до бази</button>
 </div>
   {% else %}
-  <div class="container_add_input">
-  <p>dgdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</p>
+  <div class="container_add_output">
+  <p>{{ rez }}</p>
+    <p>{{ rez }}</p>
+    <p>{{ rez }}</p>
+    <p>{{ rez }}</p>
+    <p>{{ rez }}</p>
+
     </div>
 {% endif %}
 </form >
