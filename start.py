@@ -1,9 +1,6 @@
-
-
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
-
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -13,7 +10,8 @@ def index():
     else:
         title = 'Вітання'
         if request.form['button'] == 'add':
-            print('add')
+            flag_link = 'no_link'
+            return render_template('add.html', title=title, flag_link=flag_link)
         elif request.form['button'] == 'statistics':
             print('statistics')
         elif request.form['button'] == 'find':
@@ -23,7 +21,16 @@ def index():
 
         return render_template('index.html', title=title)
 
+@app.route("/add", methods=['GET', 'POST'])
+def add():
+    if request.method == 'GET':
+        title = 'Додати до бази'
+        return render_template('add.html', title=title)
+    else:
+        title = 'Додати до бази'
 
+
+        return render_template('add.html', title=title)
 
 
 if __name__ == '__main__':

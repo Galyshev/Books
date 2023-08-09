@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<style type="text/css">
+  </style>
+{% endblock %}
+{% block content %}
+{% if flag_link == 'no_link' %}
+<form action = "/add" method = "post" >
+<div class="container_add_input">
+Посилання на книгу: <input class="add_input" type = "text"  name = "link">
+  <button type="submit" name="add_btn" class="add_btn" value="add_btn"> Додати до бази</button>
+</div>
+  {% else %}
+  <div class="container_add_input">
+  <p>dgdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</p>
+    </div>
+{% endif %}
+</form >
+{% endblock %}
