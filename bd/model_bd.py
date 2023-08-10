@@ -13,7 +13,7 @@ class Content(Base):
     id_genre = Column(Text)
     status = Column(Text)  # прочитано / не начинал / не понравилось
     date_update = Column(Text)
-    link = Column(Text)  # для скачивания
+    link = Column(Text)  # для открытия на сайте
     cover = Column(Text)  # обложка
 
     def __init__(self, id_book, id_author, title, id_genre, status, date_update, link, cover, id_serie):

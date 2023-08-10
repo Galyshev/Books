@@ -30,10 +30,9 @@ def add():
     else:
         title = 'Додати до бази'
         link = request.form['link']
-        rez = BS_add.parser_add(link)
-        print("rez   " + rez)
-
-        return render_template('add.html', title=title, rez=rez)
+        dic_rez = BS_add.parser_add(link)
+        flag_link = 'link'
+        return render_template('add.html', title=title, flag_link=flag_link, dic_rez=dic_rez)
 
 
 if __name__ == '__main__':
