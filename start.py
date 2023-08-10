@@ -28,11 +28,16 @@ def add():
         flag_link = 'no_link'
         return render_template('add.html', title=title, flag_link=flag_link)
     else:
+        flag_link = 'link'
         title = 'Додати до бази'
         link = request.form['link']
+
         dic_rez = BS_add.parser_add(link)
-        flag_link = 'link'
-        return render_template('add.html', title=title, flag_link=flag_link, dic_rez=dic_rez)
+        if dic_rez != 'error':
+            return render_template('add.html', title=title, flag_link=flag_link, dic_rez=dic_rez)
+        else:
+            return render_template('add.html', title='error', flag_link='error')
+
 
 
 if __name__ == '__main__':

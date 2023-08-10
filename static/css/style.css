@@ -67,10 +67,20 @@ body {
   opacity: 0.95;
   flex-flow: column wrap-reverse;
   align-items: center;
-  padding: 10px;
-  margin: 30px 30px;
-  width: auto;
+  padding: 2%;
+  margin: 1% auto;
+  width: 40%;
   height: auto;
   font: italic small-caps 16px/2 cursive;
-  font-size: 1.2em;
+  font-size: 1.1em;
+}
+
+img {
+  width: 60%;
+  height: auto;
+
+}
+.btn_home {
+  font: italic small-caps 16px/2 cursive;
+  font-size: 0,5em;
 }

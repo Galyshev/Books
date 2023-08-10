@@ -1,5 +1,6 @@
 import re
 
+from flask import render_template
 from sqlalchemy.sql import text as sa_text
 from bd.alchemy import db_session
 import requests
@@ -7,7 +8,11 @@ from bs4 import BeautifulSoup
 from bd import model_bd
 def parser_add(link):
     headers = {'User-Agent': 'Mozilla/5.0'}
-    r = requests.get(link, headers=headers)
+    try:
+        r = requests.get(link, headers=headers)
+    except:
+        dic_rez = 'error'
+        return dic_rez
     soup = BeautifulSoup(r.text, 'html.parser')
     content = soup.findAll("div", {"id": "main"})
     for row in content:
@@ -54,9 +59,9 @@ def parser_add(link):
         except:
             info = 'без аннотации'
 
-        rez = {'id_book': id_book, 'author': author, 'id_author': id_author, 'serie': serie, 'id_serie': id_serie,
+        to_sql = {'id_book': id_book, 'author': author, 'id_author': id_author, 'serie': serie, 'id_serie': id_serie,
                'title': title, 'genres': dic_genres, 'date_update': date_update, 'cover': cover, 'info': info}
-        print(rez)
+        rez = {'title': title, 'cover': cover}
         return rez
 
 
