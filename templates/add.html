@@ -9,21 +9,36 @@
 <form action="/add" method="post">
     <div class="container_add_input">
         Посилання на книгу: <input class="add_input" type="text" name="link">
+   <div class="selects">
+<select class="status" name="status" autofocus>
+<option disabled="disabled" selected="selected">Чи сподобалася ця книга ?</option>
+<option value="Yes">Сподобалась</option>
+<option value="No">Не сподобалась</option>
+<option value="No_read">Не читав</option>
+</select>
+<select class="status" name="interest" autofocus>
+<option disabled="disabled" selected="selected">Чи слідкувати за цією серією</option>
+<option value="Yes">Так</option>
+<option value="No">Ні</option>
+</select>
+       </div>
         <button type="submit" name="add_btn" class="add_btn"> Додати до бази</button>
     </div>
     {% elif flag_link == 'link' %}
-        <div class="container_add_output">
+    <div class="container_add_output">
         <p>Книга "{{ dic_rez.title }}" добалена базу</p><br>
-        <button onclick="window.location='/';" value="click here" class="btn_home">
+        <button onclick="window.location='/'" value="click here" class="btn_home">
             <img src="{{ dic_rez.cover }}" alt="{{ dic_rez.cover }}"> <br>Вернуться на главную
         </button>
     </div>
     {% else %}
     <div class="container_add_input">
-    <p>Неверный формат ссылки</p>
-            <p><button onclick="window.location='/add';" value="click here"> Назад</button>
-           <button onclick="window.location='/';" value="click here"> На главную</button></p>
-</div>
+        <p>Неверный формат ссылки</p>
+        <p>
+            <button onclick="window.location='/add'" value="click here"> Назад</button>
+            <button onclick="window.location='/'" value="click here"> На главную</button>
+        </p>
+    </div>
     {% endif %}
 </form>
 {% endblock %}

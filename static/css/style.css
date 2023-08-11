@@ -60,6 +60,12 @@ body {
    border: none;
   border-radius: 20px;
 }
+.status {
+margin: 10px;
+padding: 10px;
+ font: italic small-caps 16px/2 cursive;
+ font-size: 0.4em;
+}
 .container_add_output {
   box-sizing: border-box;
   display: flex;

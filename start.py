@@ -31,8 +31,9 @@ def add():
         flag_link = 'link'
         title = 'Додати до бази'
         link = request.form['link']
-
-        dic_rez = BS_add.parser_add(link)
+        status = request.form['status']
+        interest = request.form['interest']
+        dic_rez = BS_add.parser_add(link, status, interest)
         if dic_rez != 'error':
             return render_template('add.html', title=title, flag_link=flag_link, dic_rez=dic_rez)
         else:

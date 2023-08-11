@@ -1,12 +1,9 @@
 import re
-
-from flask import render_template
-from sqlalchemy.sql import text as sa_text
-from bd.alchemy import db_session
 import requests
 from bs4 import BeautifulSoup
-from bd import model_bd
-def parser_add(link):
+from sql import my_sql
+
+def parser_add(link, status, interest):
     headers = {'User-Agent': 'Mozilla/5.0'}
     try:
         r = requests.get(link, headers=headers)
@@ -37,11 +34,13 @@ def parser_add(link):
         title = soup.find("img", {'src': re.compile('\/img/zn*')}).next.strip()
 
         genres = soup.findAll("a", {'href': re.compile('\/g/[0-9]+')})
-        dic_genres = {}
+
+        ls_genres = []
         for g in genres:
             id_genre = g['href'].split('/')[-1]
+            ls_genres.append(id_genre)
             genre = g.text
-            dic_genres[id_genre] = genre
+            ls_genres.append(genre)
 
         date_update = soup.find("div", {"class": "fb2info-content"}).next.next
         if date_update != None:
@@ -59,8 +58,7 @@ def parser_add(link):
         except:
             info = 'без аннотации'
 
-        to_sql = {'id_book': id_book, 'author': author, 'id_author': id_author, 'serie': serie, 'id_serie': id_serie,
-               'title': title, 'genres': dic_genres, 'date_update': date_update, 'cover': cover, 'info': info}
+        my_sql.add_to_base(id_book, author, id_author, serie, id_serie, title, ls_genres, date_update, cover, info, link, status, interest)
         rez = {'title': title, 'cover': cover}
         return rez
 
@@ -71,3 +69,5 @@ def parser_add(link):
 # parser_add('https://flibusta.is/b/744163')
 # parser_add('https://flibusta.is/b/743121')
 # parser_add('https://flibusta.is/b/742199')
+
+# parser_add('http://flibusta.is/b/744170')
