@@ -1,6 +1,7 @@
 body {
   margin: 0;
   background-image: url("/static/img/books_fon.jpg");
+
 }
 
 .box_buttons {
@@ -11,6 +12,7 @@ body {
   padding: 150px 10px;
 
 }
+
 .child {
   font: italic small-caps bold 16px/2 cursive;
   margin: 15px;
@@ -22,6 +24,7 @@ body {
   border: none;
   border-radius: 20px;
 }
+
 .statistics {
   font: italic small-caps bold 16px/2 cursive;
   padding: 1px 1px;
@@ -46,12 +49,14 @@ body {
   font: italic small-caps 16px/2 cursive;
   font-size: 2em;
 }
+
 .add_input {
  background-color: #E1ECEB;
  margin: 10px;
  width: 300px;
  height: 30px;
 }
+
 .add_btn {
  width: 300px;
  height: 40px;
@@ -60,12 +65,14 @@ body {
    border: none;
   border-radius: 20px;
 }
+
 .status {
 margin: 10px;
 padding: 10px;
  font: italic small-caps 16px/2 cursive;
  font-size: 0.4em;
 }
+
 .container_add_output {
   box-sizing: border-box;
   display: flex;
@@ -84,9 +91,74 @@ padding: 10px;
 img {
   width: 60%;
   height: auto;
-
 }
+
 .btn_home {
   font: italic small-caps 16px/2 cursive;
   font-size: 0,5em;
 }
+
+.container_find_block {
+  box-sizing: border-box;
+  display: flex;
+  background-color: white;
+  opacity: 0.95;
+  flex-flow: column wrap-reverse;
+  align-items: center;
+  padding: 2%;
+  margin: 15% auto;
+  width: 50%;
+  height: auto;
+  font: italic small-caps 16px/2 cursive;
+  font-size: 1,1em;
+}
+
+.find_block {
+margin: 10px;
+padding: 10px;
+ font: italic small-caps 16px/2 cursive;
+ font-size: 1,1em;
+}
+
+.find_btn {
+ width: 300px;
+ height: 40px;
+ font: italic small-caps 16px/2 cursive;
+ font-size: 1em;
+   border: none;
+  border-radius: 20px;
+}
+
+.cont_author {
+ width: 300px;
+ height: 50px;
+ font: italic small-caps 16px/2 cursive;
+ font-size: 0.7em;
+ border: none;
+ border-radius: 20px;
+
+}
+
+.container_out {
+  display: table;
+  justify-content: flex-start;
+  background-color: white;
+  opacity: 0.95;
+  margin: 3% 3%;
+}
+.btn_out {
+  width: 330px;
+  height: 430px;
+  margin: 5px;
+}
+.img_out {
+  width: 290px;
+  height: 390px;
+}
+
+.link_home {
+ margin: 3%;
+ font: italic small-caps 16px/2 cursive;
+ font-size: 1.8em;
+}
+

@@ -38,8 +38,57 @@ def add_to_base(id_book, author, id_author, serie, id_serie, title, genres, date
             db_session.add(genre_add)
             db_session.commit()
 
+def search_by_author(txt):
+    search = "%{}%".format(txt)
+    authors = Author.query.filter(Author.author.like(search)).all()
+    rez = {}
+    if len(authors) != 0:
+        for i in authors:
+            id_author = i.id_author
+            author = i.author
+            rez[id_author] = author
+    else:
+        return 'Не знайдено'
+    return rez
 
-# dic_genres = ['2', 'Боевая фантастика', '4', 'Героическая фантастика', '213', 'Самиздат, сетевая литература', '9', 'Ужасы']
-# add_to_base(dic_genres)
+def boks_by_author(id_author):
+    books = Content.query.filter(Content.id_author == id_author ).all()
+    rez = []
+    if len(books) != 0:
+        for i in books:
+            rez.append(i)
+    else:
+        return 'Не знайдено'
+
+    return rez
+
+def search_by_series(txt):
+    search = "%{}%".format(txt)
+    series = Serie.query.filter(Serie.serie.like(search)).all()
+    rez = {}
+    if len(series) != 0:
+        for i in series:
+            id_serie = i.id_serie
+            serie = i.serie
+            rez[id_serie] = serie
+    else:
+        return 'Не знайдено'
+    return rez
+
+def boks_by_series(id_serie):
+    books = Content.query.filter(Content.id_serie == id_serie).all()
+    rez = []
+    if len(books) != 0:
+        for i in books:
+            rez.append(i)
+    else:
+        return 'Не знайдено'
+
+    return rez
+
+def book_by_books(txt):
+    search = "%{}%".format(txt)
+    books = Content.query.filter(Content.title.like(search)).all()
+    return books
 
 
