@@ -12,6 +12,7 @@ services:
       - DB_HOST=postgres_container
       - DB_USER=postgres
       - DB_PASSWORD=postgres
+      - FLSK_SECRET_KEY='fghgfdssdfdsgdfhgf'
   db:
     image: postgres:14.1-alpine
     environment:

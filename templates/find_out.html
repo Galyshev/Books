@@ -5,6 +5,7 @@
 </style>
 {% endblock %}
 {% block content %}
+<form action="/output_book_books" method="post">
 <div class="container_out">
     {% for k in rez %}
     <button onclick="window.location='/'" value="{{ k.id_book }}" class="btn_out" name="btn_out">
@@ -18,5 +19,5 @@
     <a href="/"> <font color="white">На головну </a>
 </div>
 
-
+</form>
 {% endblock %}

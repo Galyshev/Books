@@ -162,3 +162,51 @@ padding: 10px;
  font-size: 1.8em;
 }
 
+.container_detail_out {
+  display: flex;
+  background-color: white;
+  opacity: 0.95;
+  margin: 3% 3%;
+}
+.cont_detail {
+  margin: 5px;
+  width: 500px;
+  height: 600px;
+}
+
+.cont_detail_txt {
+  margin: 5px;
+  width: auto;
+  height: auto;
+}
+
+.img_det{
+margin: 5px;
+  width: auto;
+  height: 590px;
+}
+
+.p_detail {
+ margin: 3%;
+ font: italic small-caps 16px/2 cursive;
+ font-size: 1em;
+}
+
+.p_title {
+ margin: 3%;
+ font: italic small-caps 16px/2 cursive;
+ font-size: 1.5em;
+}
+
+.p_annot {
+ margin: 3%;
+ font: italic small-caps 16px/2 cursive;
+ font-size: 0.8em;
+}
+
+.p_interest {
+ margin: 3%;
+ font: italic small-caps 16px/2 cursive;
+ font-size: 1.2em;
+ color: green;
+}

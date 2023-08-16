@@ -1,9 +1,12 @@
+import os
+
 from flask import Flask, render_template, request, redirect, session, url_for
 from BS import BS_add
 from sql import my_sql
 
 app = Flask(__name__)
-app.secret_key = 'jbhjvgjhkjjghjkdsdfsd'
+app.secret_key = os.environ.get("SECRET_KEY", 'FLSK_SECRET_KEY')
+
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -11,16 +14,14 @@ def index():
         title = 'Вітання'
         return render_template('index.html', title=title)
     else:
+        title = 'Вітання'
         if request.form['button'] == 'add':
             return redirect('/add')
         elif request.form['button'] == 'statistics':
-            title = 'Вітання'
             return render_template('index.html', title=title)
         elif request.form['button'] == 'find':
-            title = 'Вітання'
             return redirect('/find')
         else:
-            title = 'Вітання'
             return render_template('index.html', title=title)
 
 
@@ -52,8 +53,6 @@ def find():
             return redirect(url_for('.output_book_books', inp_txt=inp_txt))
 
 
-
-
 @app.route("/add", methods=['GET', 'POST'])
 def add():
     if request.method == 'GET':
@@ -72,10 +71,10 @@ def add():
         else:
             return render_template('add.html', title='error', flag_link='error')
 
+
 @app.route("/output_book_authors", methods=['GET', 'POST'])
 def output_book_authors():
     if request.method == 'GET':
-        authors = ''
         authors = session['authors']
         title = session['title']
         flag = session['flag']
@@ -86,10 +85,10 @@ def output_book_authors():
         rez = my_sql.boks_by_author(id_author)
         return render_template('find_out.html', title=title, rez=rez)
 
+
 @app.route("/output_book_serie", methods=['GET', 'POST'])
 def output_book_serie():
     if request.method == 'GET':
-        series = ''
         series = session['series']
         title = session['title']
         flag = session['flag']
@@ -100,24 +99,41 @@ def output_book_serie():
         rez = my_sql.boks_by_series(id_serie)
         return render_template('find_out.html', title=title, rez=rez)
 
+
 @app.route("/output_book_books", methods=['GET', 'POST'])
 def output_book_books():
     if request.method == 'GET':
         title = "Книга"
         inp_txt = session['inp_txt']
-
         inp_txt = inp_txt.capitalize()
         books_up = my_sql.book_by_books(inp_txt)
-
         inp_txt = inp_txt.lower()
         books_lo = my_sql.book_by_books(inp_txt)
         books = set(books_up + books_lo)
-
         return render_template('find_out.html', title=title, rez=books)
+    else:
+        inp_txt = request.form['btn_out']
+        session['inp_txt'] = inp_txt
+        return redirect(url_for('.detail_book', inp_txt=inp_txt))
+
+@app.route("/detail_book", methods=['GET', 'POST'])
+def detail_book():
+    if request.method == 'GET':
+        title = "Подробиці"
+        inp_txt = session['inp_txt']
+        rez = my_sql.detail_books(inp_txt)
+        # books = rez['books'][0]
+        # genre = rez['genre']
+        # serie = rez['serie']
+        # autor = rez['autor']
+        # annot = rez['annot']
+        # return render_template('index.html', title=title)
+        return render_template('detail_book.html', title=title, genre=rez['genre'], serie=rez['serie'],
+                               autor=rez['autor'], annot=rez['annot'], book_title=rez['title'], cover=rez['cover'],
+                               status=rez['status'], interest=rez['interest'])
     else:
         title = 'Книги'
         return render_template('index.html', title=title)
-
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)
