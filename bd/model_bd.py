@@ -76,3 +76,14 @@ class Genre(Base):
     def __init__(self, genre, id_genre):
         self.genre = genre
         self.id_genre = id_genre
+
+class New_books(Base):
+    __tablename__ = "new_books"
+
+    id = Column(Integer, primary_key=True)
+    id_book = Column(Text)
+    date_update = Column(Text)
+
+    def __init__(self, id_book, date_update):
+        self.id_book = id_book
+        self.date_update = date_update

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<style type="text/css">
+  </style>
+{% endblock %}
+{% block content %}
+<form action = "/detail_new_book" method = "post" >
+<div class="container_detail_out">
+    <div class="cont_detail">
+        <button onclick="window.location='/'" value="{{ link }}" class="btn_out" name="btn_out">
+        <img src="{{ cover }}" alt="{{ cover }}" class="img_det">
+        </button>
+ </div>
+        <div class="cont_detail_txt">
+            <p class="p_detail">{{ autor }}</p>
+            <p class="p_title">{{ book_title }}</p>
+            <p class="p_detail">{{ serie }}</p>
+            <p class="p_detail">{{ genre }}</p>
+            <p class="p_annot">{{ annot }}</p>
+            {% if status == 'Yes' %}
+            <p class="p_interest">Книга сподобалась</p>
+            {% elif status == 'No' %}
+            <p class="p_interest"> <font color="red">Книга не сподобалась</p>
+            {% else %}
+            <p class="p_interest"> <font color="black">Не читав</p>
+            {% endif %}
+
+            {% if interest == 'Yes' %}
+            <p class="p_interest">Слідкую за цією серією</p>
+            {% endif %}
+
+ </div>
+    </div>
+</form >
+{% endblock %}

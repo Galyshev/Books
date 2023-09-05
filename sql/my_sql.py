@@ -1,6 +1,6 @@
 from bd.alchemy import db_session
-from bd.model_bd import Content, Serie, Author, Genre, Info
-from sqlalchemy.sql import text as sa_text
+from bd.model_bd import Content, Serie, Author, Genre, Info, New_books
+from datetime import date
 
 def add_to_base(id_book, author, id_author, serie, id_serie, title, genres, date_update, cover, info,
                   link, status, interest):
@@ -131,4 +131,22 @@ def detail_books(txt):
 
     return rez
 
+def check_books(id_book):
+    books = New_books.query.filter(New_books.id_book == id_book).all()
+    return books
+def add_to_new_books_base(id_book):
+    today = date.today()
+    cont_add = New_books(id_book=id_book, date_update=today)
+    db_session.add(cont_add)
+    db_session.commit()
 
+def check_serie(id_serie):
+    books = Content.query.filter(Content.id_serie == id_serie).all()
+    rez = []
+    if len(books) != 0:
+        for i in books:
+            rez.append(i)
+    else:
+        return 'Не знайдено'
+
+    return rez

@@ -1,7 +1,7 @@
 import os
-
+import webbrowser
 from flask import Flask, render_template, request, redirect, session, url_for
-from BS import BS_add
+from BS import BS_add, BS_new
 from sql import my_sql
 
 app = Flask(__name__)
@@ -22,7 +22,7 @@ def index():
         elif request.form['button'] == 'find':
             return redirect('/find')
         else:
-            return render_template('index.html', title=title)
+            return redirect('/new_book')
 
 
 @app.route("/find", methods=['GET', 'POST'])
@@ -122,18 +122,49 @@ def detail_book():
         title = "Подробиці"
         inp_txt = session['inp_txt']
         rez = my_sql.detail_books(inp_txt)
-        # books = rez['books'][0]
-        # genre = rez['genre']
-        # serie = rez['serie']
-        # autor = rez['autor']
-        # annot = rez['annot']
-        # return render_template('index.html', title=title)
+
         return render_template('detail_book.html', title=title, genre=rez['genre'], serie=rez['serie'],
                                autor=rez['autor'], annot=rez['annot'], book_title=rez['title'], cover=rez['cover'],
                                status=rez['status'], interest=rez['interest'])
     else:
         title = 'Книги'
         return render_template('index.html', title=title)
+
+@app.route("/new_book", methods=['GET', 'POST'])
+def new_book():
+    if request.method == 'GET':
+        title = "Книга"
+        rez = BS_new.new_books()
+        return render_template('find_out_new_books.html', title=title, rez=rez)
+    else:
+        title = "Книга"
+        inp_txt = request.form['btn_out']
+        session['inp_txt'] = inp_txt
+        return redirect(url_for('.detail_new_book', inp_txt=inp_txt))
+
+@app.route("/detail_new_book", methods=['GET', 'POST'])
+def detail_new_book():
+    if request.method == 'GET':
+        title = "Подробиці"
+        link = session['inp_txt']
+        status = 'Новая книга'
+        interest = ''
+        rez = BS_new.parser_new_book(link, status, interest)
+        return render_template('detail__new_book.html', title=title, genre=rez['genre'], serie=rez['serie'],
+                               autor=rez['autor'], annot=rez['annot'], book_title=rez['title'], cover=rez['cover'],
+                               status=rez['status'], interest=rez['interest'], link=link)
+    else:
+        link = request.form['btn_out']
+        webbrowser.open(link)
+        title = "Подробиці"
+        link = session['inp_txt']
+        status = 'Новая книга'
+        interest = ''
+        rez = BS_new.parser_new_book(link, status, interest)
+        return render_template('detail__new_book.html', title=title, genre=rez['genre'], serie=rez['serie'],
+                               autor=rez['autor'], annot=rez['annot'], book_title=rez['title'], cover=rez['cover'],
+                               status=rez['status'], interest=rez['interest'], link=link)
+
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)
