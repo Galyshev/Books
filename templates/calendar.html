@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<style type="text/css">
+</style>
+{% endblock %}
+{% block content %}
+
+<form action="/new_for_date" method="post">
+    <div class="container_date">
+
+    <p><b>Обрати дату з доступних</b></p>
+    <label for class=date"></label>
+    <input type="date" class="date" name="date"
+           value="{{ date_today }}" min="{{ date_start }}" max="{{ date_today }}">
+
+
+    <p><input type="submit" value="Submit"></p>
+
+</form>
+{% endblock %}

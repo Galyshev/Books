@@ -4,35 +4,40 @@ from bs4 import BeautifulSoup
 from sql import my_sql
 
 def new_books():
-    link = 'https://flibusta.is/new'
-    headers = {'User-Agent': 'Mozilla/5.0'}
-    r = requests.get(link, headers=headers)
-
-    soup = BeautifulSoup(r.text, 'html.parser')
-    content = soup.find("div", {"id": "main"}).findAll("div")
-    like_genres = ['/g/81', '/g/166', '/g/2', '/g/4', '/g/124', '/g/5', '/g/7', '/g/253', '/g/254', '/g/226', '/g/11', '/g/230', '/g/3']
-    new_sorted_books = []
-    for line in content:
-        genres = line.findAll("a", {'href': re.compile('\/g/[0-9]+')})
-        id_book = 'NO'
-        for g in genres:
-            if g['href'] in like_genres:
-                id_book = line.find("a", {'href': re.compile('\/b/[0-9]+')})['href']
-        if id_book != 'NO':
-            chk_books = my_sql.check_books(id_book)
-            if len(chk_books) == 0:
-                new_sorted_books.append(id_book)
-                # my_sql.add_to_new_books_base(id_book)
+    ls_link = ['https://flibusta.is/new', 'https://flibusta.is/new?page=1', 'https://flibusta.is/new?page=2']
     rez = []
-    for id in new_sorted_books:
-        link = 'https://flibusta.is' + id
+    for link in ls_link:
         headers = {'User-Agent': 'Mozilla/5.0'}
         r = requests.get(link, headers=headers)
+
         soup = BeautifulSoup(r.text, 'html.parser')
-        cover = soup.find("img", {'src': re.compile('\/i/+')})['src']
-        cover = 'https://flibusta.is/' + cover
-        tmp_dic = {'link': link, 'cover': cover}
-        rez.append(tmp_dic)
+        content = soup.find("div", {"id": "main"}).findAll("div")
+        like_genres = ['/g/81', '/g/166', '/g/2', '/g/4', '/g/124', '/g/5', '/g/7', '/g/253', '/g/254', '/g/226', '/g/11', '/g/230', '/g/3']
+        new_sorted_books = []
+        for line in content:
+            genres = line.findAll("a", {'href': re.compile('\/g/[0-9]+')})
+            id_book = 'NO'
+            for g in genres:
+                if g['href'] in like_genres:
+                    id_book = line.find("a", {'href': re.compile('\/b/[0-9]+')})['href']
+            if id_book != 'NO':
+                chk_books = my_sql.check_books(id_book)
+                if len(chk_books) == 0:
+                    new_sorted_books.append(id_book)
+                    # my_sql.add_to_new_books_base(id_book)
+
+        for id in new_sorted_books:
+            try:
+                link = 'https://flibusta.is' + id
+                headers = {'User-Agent': 'Mozilla/5.0'}
+                r = requests.get(link, headers=headers)
+                soup = BeautifulSoup(r.text, 'html.parser')
+                cover = soup.find("img", {'src': re.compile('\/i/+')})['src']
+                cover = 'https://flibusta.is/' + cover
+                tmp_dic = {'link': link, 'cover': cover}
+                rez.append(tmp_dic)
+            except:
+                pass
     return rez
 
 def parser_new_book(link, status, interest):
@@ -98,4 +103,23 @@ def parser_new_book(link, status, interest):
         rez = {'title': title, 'cover': cover, 'serie': serie, 'autor': author, 'annot': info, 'book_title': title, 'status': 'status', 'interest': interest, 'genre': ls_genres}
         return rez
 
+def new_book_for_date(date):
+    rez = []
+    new_sorted_books = my_sql.check_book_from_date(date)
+    for id in new_sorted_books:
+        try:
+            link = 'https://flibusta.is' + id
+            headers = {'User-Agent': 'Mozilla/5.0'}
+            r = requests.get(link, headers=headers)
+            soup = BeautifulSoup(r.text, 'html.parser')
+            cover = soup.find("img", {'src': re.compile('\/i/+')})['src']
+            cover = 'https://flibusta.is/' + cover
+            tmp_dic = {'link': link, 'cover': cover}
+            rez.append(tmp_dic)
+        except:
+            pass
+    return rez
+
+
 # new_books()
+# new_book_for_date('2023-09-07')

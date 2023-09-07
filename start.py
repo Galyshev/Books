@@ -1,8 +1,9 @@
 import os
-import webbrowser
+from datetime import date
 from flask import Flask, render_template, request, redirect, session, url_for
 from BS import BS_add, BS_new
 from sql import my_sql
+import urllib.request
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", 'FLSK_SECRET_KEY')
@@ -21,9 +22,10 @@ def index():
             return render_template('index.html', title=title)
         elif request.form['button'] == 'find':
             return redirect('/find')
+        elif request.form['button'] == 'new_for_date':
+            return redirect('/new_for_date')
         else:
             return redirect('/new_book')
-
 
 @app.route("/find", methods=['GET', 'POST'])
 def find():
@@ -155,7 +157,7 @@ def detail_new_book():
                                status=rez['status'], interest=rez['interest'], link=link)
     else:
         link = request.form['btn_out']
-        webbrowser.open(link)
+        webUrl = urllib.request.urlopen(link)
         title = "Подробиці"
         link = session['inp_txt']
         status = 'Новая книга'
@@ -164,7 +166,19 @@ def detail_new_book():
         return render_template('detail__new_book.html', title=title, genre=rez['genre'], serie=rez['serie'],
                                autor=rez['autor'], annot=rez['annot'], book_title=rez['title'], cover=rez['cover'],
                                status=rez['status'], interest=rez['interest'], link=link)
+@app.route("/new_for_date", methods=['GET', 'POST'])
+def new_for_date():
+    if request.method == 'GET':
+        title = "Книги з бази по даті"
+        date_start = '2023-09-06'
+        date_today = date.today()
+        return render_template('calendar.html', title=title, date_start=date_start, date_today=date_today)
+    else:
+        input_date = request.form['date']
+        title = "Книги з бази по даті"
 
+        rez = BS_new.new_book_for_date(input_date)
+        return render_template('find_out_new_books.html', title=title, rez=rez)
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)

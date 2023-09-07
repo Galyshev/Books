@@ -150,3 +150,14 @@ def check_serie(id_serie):
         return 'Не знайдено'
 
     return rez
+
+def check_book_from_date(date):
+    books = New_books.query.filter(New_books.date_update == date).all()
+    rez = []
+    if len(books) != 0:
+        for i in books:
+            rez.append(i.id_book)
+    else:
+        return 'Не знайдено'
+
+    return rez
